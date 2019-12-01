@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <h2>User Registration Form</h2>
+
+  <form
+    #form="ngForm"
+    *ngIf="!submitted"
+    (ngSubmit)="onSubmit(form)"
+    novalidate
+  >
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        type="text"
+        #name="ngModel"
+        required
+        class="form-control"
+        [class.is-invalid]="name.invalid && name.touched"
+        name="name"
+        [(ngModel)]="service.formData.name"
+      />
+      <small class="text-danger" [class.d-none]="name.valid || name.untouched"
+        >Name is required</small
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        [(ngModel)]="service.formData.email"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="tel"
+        #phone="ngModel"
+        required
+        pattern="^\d{10}$"
+        class="form-control"
+        [class.is-invalid]="phone.invalid && phone.touched"
+        name="phone"
+        [(ngModel)]="service.formData.phone"
+      />
+      <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+        <small class="text-danger" *ngIf="phone.errors.required"
+          >Phone number is required</small
+        >
+        <small class="text-danger" *ngIf="phone.errors.pattern"
+          >Phone number must be 10 digits</small
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        #password="ngModel"
+        class="form-control"
+        name="password"
+        [(ngModel)]="service.formData.password"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        #confpassword="ngModel"
+        class="form-control"
+        name="confpassword"
+        [(ngModel)]="service.formData.confpassword"
+      />
+    </div>
+
+    <button
+      class="btn btn-primary"
+      [disabled]="form.invalid || topicHasError"
+      type="submit"
+    >
+      Submit form
+    </button>
+  </form>
+  <div class="alert alert-danger" *ngIf="errorMsg">
+    {{ errorMsg }}
+  </div>
+</div>
